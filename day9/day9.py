@@ -2,6 +2,7 @@
 Advent of Code 2020 - Day 9
 Encoding Error
 '''
+import collections
 
 def readInput(file):
     with open(file) as f:
@@ -56,13 +57,45 @@ def findSum(lines, target):
         
     return result
 
+def findContiguousSum(lines, target):
+    # Ref: https://docs.python.org/3/library/collections.html#collections.deque
+    # Put first element in the deque
+    contigDeque = collections.deque()
+    contigDeque.append(lines[0])
+    dequeSum = int(lines[0])
+    found = False
 
+    i = 1
+    while i < len(lines) and not found:
+        # Grow and shrink the deque as necessary
+        if dequeSum < target:
+            # Add next number in list to the deque
+            contigDeque.append(lines[i])
+            # Add next number to the sum of all numbers held by the deque
+            dequeSum += int(lines[i])
+            i += 1
+        elif dequeSum > target:
+            # Pop the furthest-left number out of the deque
+            popped = int(contigDeque.popleft())
+            # Subtract the popped amount from the deque sum
+            dequeSum -= popped
+        else:
+            found = True
+
+    return contigDeque
 
 
 
 if __name__ == '__main__':
-    lines = readInput('input.txt')
-    lenPreamble = 25
+    inputFile = 'input.txt'
+    #inputFile = 'shortInput.txt'
+    lines = readInput(inputFile)
+
+    lenPreamble = int()
+    if inputFile == 'input.txt':
+        lenPreamble = 25
+    elif inputFile == 'shortInput.txt':
+        lenPreamble = 5
 
     # Puzzle 1
     result = parseXMAS(lines, lenPreamble)
@@ -70,4 +103,16 @@ if __name__ == '__main__':
 
     # Puzzle 1 answer:
     print(f'Puzzle 1 answer: {puzzle1Answer}')
+
+    # Puzzle 2:
+    contigDeque = findContiguousSum(lines, puzzle1Answer)
+    # Each member of the contigDeque is stored as a string
+    # Build a new list of integers from the contigDeque so they
+    # may be sorted as integers and used in the final answer
+    answerList = [int(x) for x in contigDeque]
+    answerList.sort()
+    puzzle2Answer = answerList[0] + answerList[len(answerList) - 1]
+
+    # Puzzle 2 answer:
+    print(f'Puzzle 2 answer: {puzzle2Answer}')
 
