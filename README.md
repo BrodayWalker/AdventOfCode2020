@@ -13,3 +13,4 @@ I arrived late to the party and did not discover Advent of Code 2020 until Decem
 | 7  | [Probelm 7](https://adventofcode.com/2020/day/7)  | Unsolved for now |
 | 8  | [Problem 8](https://adventofcode.com/2020/day/8)  | [Solution](day8/day8.py) |
 | 9  | [Problem 9](https://adventofcode.com/2020/day/9)  | [Solution](day9/day9.py) |
+| 10 | [Problem 10](https://adventofcode.com/2020/day/10) | [Solution to Part 1](day10/day10.py) |
